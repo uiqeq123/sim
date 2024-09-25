@@ -70,7 +70,7 @@ class StompyMicroCfg(LeggedRobotCfg):
         restitution = 0.0
 
     class noise:
-        add_noise = True
+        add_noise = False
         noise_level = 0.6  # scales other values
 
         class noise_scales:
@@ -123,12 +123,12 @@ class StompyMicroCfg(LeggedRobotCfg):
 
     class domain_rand(LeggedRobotCfg.domain_rand):
         start_pos_noise = 0.1
-        randomize_friction = True
+        randomize_friction = False
         friction_range = [0.1, 2.0]
 
-        randomize_base_mass = True
+        randomize_base_mass = False
         added_mass_range = [-1.0, 1.0]
-        push_robots = True
+        push_robots = False
         push_interval_s = 4
         max_push_vel_xy = 0.2
         max_push_ang_vel = 0.4
@@ -156,7 +156,7 @@ class StompyMicroCfg(LeggedRobotCfg):
         target_feet_height = 0.05  # m
         cycle_time = 0.4  # sec
         # if true negative total rewards are clipped at zero (avoids early termination problems)
-        only_positive_rewards = True
+        only_positive_rewards = False
         # tracking reward = exp(error*sigma)
         tracking_sigma = 5.0
         max_contact_force = 400  # forces above this value are penalized
@@ -231,16 +231,16 @@ class StompyMicroCfgPPO(LeggedRobotCfgPPO):
 
     class policy:
         init_noise_std = 1.0
-        actor_hidden_dims = [512, 256, 128]
-        critic_hidden_dims = [768, 256, 128]
+        actor_hidden_dims = [256, 128]  # TODO: [512, 256, 128]
+        critic_hidden_dims = [512, 128]  # TODO: [768, 256, 128]
 
     class algorithm(LeggedRobotCfgPPO.algorithm):
         entropy_coef = 0.001
         learning_rate = 1e-5
         num_learning_epochs = 2
+        num_mini_batches = 4
         gamma = 0.994
         lam = 0.9
-        num_mini_batches = 4
 
     class runner:
         policy_class_name = "ActorCritic"
