@@ -115,123 +115,123 @@ class Robot(Node):
     def default_standing(cls) -> Dict[str, float]:
         return {
             # arms
-            Robot.left_arm.shoulder_pitch: 2.25,
-            Robot.left_arm.shoulder_yaw: 1.57,
-            Robot.left_arm.shoulder_roll: 3.14,
-            Robot.left_arm.elbow_pitch: -1.61,
-            Robot.left_arm.hand.wrist_roll: -1.56,
-            Robot.left_arm.hand.gripper: -0.1,
-            Robot.right_arm.shoulder_pitch: 3.45,
-            Robot.right_arm.shoulder_yaw: -0.1,
-            Robot.right_arm.shoulder_roll: -1.61,
-            Robot.right_arm.elbow_pitch: -1.49,
-            Robot.right_arm.hand.wrist_roll: 0,
-            Robot.right_arm.hand.gripper: 0.1,
+            cls.left_arm.shoulder_pitch: 2.25,
+            cls.left_arm.shoulder_yaw: 1.57,
+            cls.left_arm.shoulder_roll: 3.14,
+            cls.left_arm.elbow_pitch: -1.61,
+            cls.left_arm.hand.wrist_roll: -1.56,
+            cls.left_arm.hand.gripper: -0.1,
+            cls.right_arm.shoulder_pitch: 3.45,
+            cls.right_arm.shoulder_yaw: -0.1,
+            cls.right_arm.shoulder_roll: -1.61,
+            cls.right_arm.elbow_pitch: -1.49,
+            cls.right_arm.hand.wrist_roll: 0,
+            cls.right_arm.hand.gripper: 0.1,
             # legs
-            Robot.legs.left.hip_pitch: 0.33,
-            Robot.legs.left.hip_roll: -1.52,
-            Robot.legs.left.hip_yaw: 4.67,
-            Robot.legs.left.knee_pitch: -0.61,
-            Robot.legs.left.ankle_pitch: 1.88,
-            Robot.legs.right.hip_pitch: 2.91,
-            Robot.legs.right.hip_roll: 3.24,
-            Robot.legs.right.hip_yaw: 3.22,
-            Robot.legs.right.knee_pitch: 0.65,
-            Robot.legs.right.ankle_pitch: -0.54,
+            cls.legs.left.hip_pitch: 0.33,
+            cls.legs.left.hip_roll: -1.52,
+            cls.legs.left.hip_yaw: 4.67,
+            cls.legs.left.knee_pitch: -0.61,
+            cls.legs.left.ankle_pitch: 1.88,
+            cls.legs.right.hip_pitch: 2.91,
+            cls.legs.right.hip_roll: 3.24,
+            cls.legs.right.hip_yaw: 3.22,
+            cls.legs.right.knee_pitch: 0.65,
+            cls.legs.right.ankle_pitch: -0.54,
         }
 
     @classmethod
     def default_limits2(cls) -> Dict[str, Dict[str, float]]:
         return {
             # left arm
-            Robot.left_arm.shoulder_pitch: {
+            cls.left_arm.shoulder_pitch: {
                 "lower": 2.54,
                 "upper": 2.56,
             },
-            Robot.left_arm.shoulder_yaw: {
+            cls.left_arm.shoulder_yaw: {
                 "lower": 1.56,
                 "upper": 1.58,
             },
-            Robot.left_arm.shoulder_roll: {
+            cls.left_arm.shoulder_roll: {
                 "lower": 3.13,
                 "upper": 3.14,
             },
-            Robot.left_arm.elbow_pitch: {
+            cls.left_arm.elbow_pitch: {
                 "lower": -1.56,
                 "upper": -1.58,
             },
-            Robot.left_arm.hand.wrist_roll: {
+            cls.left_arm.hand.wrist_roll: {
                 "lower": -1.56,
                 "upper": -1.58,
             },
-            Robot.left_arm.hand.gripper: {
+            cls.left_arm.hand.gripper: {
                 "lower": 0,
                 "upper": 1.57,
             },
             # right arm
-            Robot.right_arm.shoulder_pitch: {
+            cls.right_arm.shoulder_pitch: {
                 "lower": 3.119,
                 "upper": 3.121,
             },
-            Robot.right_arm.shoulder_yaw: {
+            cls.right_arm.shoulder_yaw: {
                 "lower": 1.981,
                 "upper": 1.979,
             },
-            Robot.right_arm.shoulder_roll: {
+            cls.right_arm.shoulder_roll: {
                 "lower": -1.381,
                 "upper": -1.979,
             },
-            Robot.right_arm.elbow_pitch: {
+            cls.right_arm.elbow_pitch: {
                 "lower": -3.319,
                 "upper": 3.321,
             },
-            Robot.right_arm.hand.wrist_roll: {
+            cls.right_arm.hand.wrist_roll: {
                 "lower": -0.001,
                 "upper": 0.001,
             },
-            Robot.right_arm.hand.gripper: {
+            cls.right_arm.hand.gripper: {
                 "lower": 0,
                 "upper": 1.57,
             },
             # left leg
-            Robot.legs.left.hip_pitch: {
+            cls.legs.left.hip_pitch: {
                 "lower": -1.14,
                 "upper": 1.14,
             },
-            Robot.legs.left.hip_roll: {
+            cls.legs.left.hip_roll: {
                 "lower": -3.5,
                 "upper": 0.5,
             },
-            Robot.legs.left.hip_yaw: {
+            cls.legs.left.hip_yaw: {
                 "lower": 3.14,
                 "upper": 5.14,
             },
-            Robot.legs.left.knee_pitch: {
+            cls.legs.left.knee_pitch: {
                 "lower": -2,
                 "upper": 0,
             },
-            Robot.legs.left.ankle_pitch: {
+            cls.legs.left.ankle_pitch: {
                 "lower": 1.4,
                 "upper": 2.2,
             },
             # right leg
-            Robot.legs.right.hip_pitch: {
+            cls.legs.right.hip_pitch: {
                 "lower": 0.55,
                 "upper": 3.55,
             },
-            Robot.legs.right.hip_roll: {
+            cls.legs.right.hip_roll: {
                 "lower": 2.75,
                 "upper": 3.99,
             },
-            Robot.legs.right.hip_yaw: {
+            cls.legs.right.hip_yaw: {
                 "lower": 2.24,
                 "upper": 4.24,
             },
-            Robot.legs.right.knee_pitch: {
+            cls.legs.right.knee_pitch: {
                 "lower": 0,
                 "upper": 2,
             },
-            Robot.legs.right.ankle_pitch: {
+            cls.legs.right.ankle_pitch: {
                 "lower": -1.0,
                 "upper": 0.2,
             },
@@ -241,94 +241,94 @@ class Robot(Node):
     def default_limits(cls) -> Dict[str, Dict[str, float]]:
         return {
             # left arm
-            Robot.left_arm.shoulder_pitch: {
+            cls.left_arm.shoulder_pitch: {
                 "lower": 2.04,
                 "upper": 3.06,
             },
-            Robot.left_arm.shoulder_yaw: {
+            cls.left_arm.shoulder_yaw: {
                 "lower": -1,
                 "upper": 2,
             },
-            Robot.left_arm.shoulder_roll: {
+            cls.left_arm.shoulder_roll: {
                 "lower": 2.63,
                 "upper": 3.64,
             },
-            Robot.left_arm.elbow_pitch: {
+            cls.left_arm.elbow_pitch: {
                 "lower": -2.06,
                 "upper": -1.08,
             },
-            Robot.left_arm.hand.wrist_roll: {
+            cls.left_arm.hand.wrist_roll: {
                 "lower": -2.06,
                 "upper": -1.08,
             },
-            Robot.left_arm.hand.gripper: {
+            cls.left_arm.hand.gripper: {
                 "lower": -0.5,
                 "upper": 2.07,
             },
             # right arm
-            Robot.right_arm.shoulder_pitch: {
+            cls.right_arm.shoulder_pitch: {
                 "lower": 2.619,
                 "upper": 3.621,
             },
-            Robot.right_arm.shoulder_yaw: {
+            cls.right_arm.shoulder_yaw: {
                 "lower": -1.481,
                 "upper": 1,
             },
-            Robot.right_arm.shoulder_roll: {
+            cls.right_arm.shoulder_roll: {
                 "lower": -1.881,
                 "upper": -1.479,
             },
-            Robot.right_arm.elbow_pitch: {
+            cls.right_arm.elbow_pitch: {
                 "lower": -3.819,
                 "upper": 3.821,
             },
-            Robot.right_arm.hand.wrist_roll: {
+            cls.right_arm.hand.wrist_roll: {
                 "lower": -0.501,
                 "upper": 0.501,
             },
-            Robot.right_arm.hand.gripper: {
+            cls.right_arm.hand.gripper: {
                 "lower": -0.5,
                 "upper": 2.07,
             },
             # left leg
-            Robot.legs.left.hip_pitch: {
+            cls.legs.left.hip_pitch: {
                 "lower": -1.64,
                 "upper": 1.64,
             },
-            Robot.legs.left.hip_roll: {
+            cls.legs.left.hip_roll: {
                 "lower": -4.0,
                 "upper": 1.0,
             },
-            Robot.legs.left.hip_yaw: {
+            cls.legs.left.hip_yaw: {
                 "lower": 2.64,
                 "upper": 5.64,
             },
-            Robot.legs.left.knee_pitch: {
+            cls.legs.left.knee_pitch: {
                 "lower": -2.5,
                 "upper": 0.5,
             },
-            Robot.legs.left.ankle_pitch: {
+            cls.legs.left.ankle_pitch: {
                 "lower": 0.9,
                 "upper": 2.7,
             },
             # right leg
-            Robot.legs.right.hip_pitch: {
+            cls.legs.right.hip_pitch: {
                 "lower": 0.05,
                 "upper": 4.05,
             },
-            Robot.legs.right.hip_roll: {
+            cls.legs.right.hip_roll: {
                 "lower": 2.25,
                 "upper": 4.49,
             },
-            Robot.legs.right.hip_yaw: {
+            cls.legs.right.hip_yaw: {
                 "lower": 1.74,
                 "upper": 4.74,
             },
-            Robot.legs.right.knee_pitch: {
+            cls.legs.right.knee_pitch: {
                 "lower": -0.5,
                 "upper": 2.5,
             },
-            Robot.legs.right.ankle_pitch: {
+            cls.legs.right.ankle_pitch: {
                 "lower": -1.5,
                 "upper": 0.7,
             },
@@ -422,5 +422,5 @@ def print_joints() -> None:
 
 
 if __name__ == "__main__":
-    # python -m sim.Robot.joints
+    # python -m sim.resources.stompymini.joints
     print_joints()
