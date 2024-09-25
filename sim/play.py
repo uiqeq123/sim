@@ -8,11 +8,9 @@ Run:
 # mypy: ignore-errors
 
 import argparse
-import copy
 import logging
 import os
 from datetime import datetime
-from typing import Any, Union
 
 import cv2
 import h5py
@@ -24,18 +22,8 @@ logger = logging.getLogger(__name__)
 
 from sim.env import run_dir  # noqa: E402
 from sim.envs import task_registry  # noqa: E402
-from sim.utils.helpers import get_args  # noqa: E402
+from sim.utils.helpers import get_args, export_policy_as_jit  # noqa: E402
 from sim.utils.logger import Logger  # noqa: E402
-
-import torch  # isort: skip
-
-
-def export_policy_as_jit(actor_critic: Any, path: Union[str, os.PathLike]) -> None:
-    os.makedirs(path, exist_ok=True)
-    path = os.path.join(path, "policy_1.pt")
-    model = copy.deepcopy(actor_critic.actor).to("cpu")
-    traced_script_module = torch.jit.script(model)
-    traced_script_module.save(path)
 
 
 def play(args: argparse.Namespace) -> None:
