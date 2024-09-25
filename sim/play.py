@@ -22,7 +22,7 @@ logger = logging.getLogger(__name__)
 
 from sim.env import run_dir  # noqa: E402
 from sim.envs import task_registry  # noqa: E402
-from sim.utils.helpers import get_args, export_policy_as_jit  # noqa: E402
+from sim.utils.helpers import export_policy_as_jit, get_args  # noqa: E402
 from sim.utils.logger import Logger  # noqa: E402
 
 
