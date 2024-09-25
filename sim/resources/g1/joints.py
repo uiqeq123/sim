@@ -130,5 +130,5 @@ def print_joints() -> None:
 
 
 if __name__ == "__main__":
-    # python -m sim.Robot.joints
+    # python -m sim.resources.[RobotName].joints
     print_joints()
