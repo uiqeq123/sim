@@ -69,7 +69,7 @@ def play(args: argparse.Namespace) -> None:
     env_logger = Logger(env.dt)
     robot_index = 0
     joint_index = 1
-    stop_state_log = 1000
+    stop_state_log = 500
     now = datetime.now().strftime("%Y-%m-%d_%H-%M-%S")
     if args.log_h5:
         h5_file = h5py.File(f"data{now}.h5", "w")
@@ -142,8 +142,7 @@ def play(args: argparse.Namespace) -> None:
             env.commands[:, 1] = 0.0
             env.commands[:, 2] = 0.0
             env.commands[:, 3] = 0.0
-        obs, critic_obs, rews, dones, infos = env.step(actions.detach())
-        print(f"IMU: {obs[0, (3 * env.num_actions + 5) + 3 : (3 * env.num_actions + 5) + 2 * 3]}")
+        obs, _, _, _, infos = env.step(actions.detach())
 
         if RENDER:
             env.gym.fetch_results(env.sim, True)
