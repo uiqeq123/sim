@@ -33,6 +33,7 @@
 
 import os
 from datetime import datetime
+from typing import Any, Tuple
 
 from sim import ROOT_DIR
 from sim.algo.ppo.on_policy_runner import OnPolicyRunner  # mypy: ignore
@@ -75,7 +76,7 @@ class TaskRegistry:
         env_cfg.seed = train_cfg.seed
         return env_cfg, train_cfg
 
-    def make_env(self, name, args=None, env_cfg=None):
+    def make_env(self, name, args=None, env_cfg=None) -> Tuple[VecEnv, Any]:
         """Creates an environment either from a registered namme or from the provided config file.
 
         Args:
