@@ -31,7 +31,6 @@ class StompyMicroCfg(LeggedRobotCfg):
         pos_limit = 1.0
         vel_limit = 1.0
         torque_limit = 0.85
-        terminate_after_contacts_on = []
 
     class asset(LeggedRobotCfg.asset):
         name = "stompymicro"
@@ -41,10 +40,7 @@ class StompyMicroCfg(LeggedRobotCfg):
         knee_name = ["DRIVING_ROTOR_PLATE_7", "DRIVING_ROTOR_PLATE_8"]
 
         termination_height = 0.1
-
         default_feet_height = 0.03
-
-        terminate_after_contacts_on = []
 
         penalize_contacts_on = []
         self_collisions = 1  # 1 to disable, 0 to enable...bitwise filter
