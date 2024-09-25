@@ -1,6 +1,8 @@
 # mypy: disable-error-code="valid-newtype"
 """Defines the environment for training the humanoid."""
 
+import logging
+
 from sim.envs.base.legged_robot import LeggedRobot
 from sim.resources.stompymicro.joints import Robot
 from sim.utils.terrain import HumanoidTerrain
@@ -8,8 +10,9 @@ from sim.utils.terrain import HumanoidTerrain
 from isaacgym import gymtorch  # isort:skip
 from isaacgym.torch_utils import *  # isort: skip
 
-
 import torch  # isort:skip
+
+logger = logging.Logger(__name__)
 
 
 class StompyMicroEnv(LeggedRobot):
@@ -57,13 +60,14 @@ class StompyMicroEnv(LeggedRobot):
 
         self.legs_joints = {}
         for name, joint in Robot.legs.left.joints_motors():
-            print(name)
             joint_handle = self.gym.find_actor_dof_handle(env_handle, actor_handle, joint)
             self.legs_joints["left_" + name] = joint_handle
 
         for name, joint in Robot.legs.right.joints_motors():
             joint_handle = self.gym.find_actor_dof_handle(env_handle, actor_handle, joint)
             self.legs_joints["right_" + name] = joint_handle
+
+        print(self.legs_joints)
 
         # Define initial states
         self.initial_root_states = torch.zeros((self.num_envs, 13), device=self.device)
@@ -81,19 +85,6 @@ class StompyMicroEnv(LeggedRobot):
         # ... set other joint positions ...
 
         self.compute_observations()
-
-        # TODO, tune damping
-        self.cfg.control.damping = {
-            'Hip_Pitch_Left': 0.1,
-            'Hip_Pitch_Right': 0.1,
-            'Hip_Lift_Left': 0.1,
-            'Hip_Lift_Right': 0.1,
-            'Hip_Roll_Left': 0.1,
-            'Hip_Roll_Right': 0.1,
-            'Knee_Rotate_Left': 0.1,
-            'Knee_Rotate_Right': 0.1,
-            'Foot_Rotate_Left': 0.1,
-        }
 
     def _push_robots(self):
         """Random pushes the robots. Emulates an impulse by setting a randomized base velocity."""
