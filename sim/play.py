@@ -69,7 +69,7 @@ def play(args: argparse.Namespace) -> None:
     env_logger = Logger(env.dt)
     robot_index = 0
     joint_index = 1
-    stop_state_log = 500
+    stop_state_log = 1000
     now = datetime.now().strftime("%Y-%m-%d_%H-%M-%S")
     if args.log_h5:
         h5_file = h5py.File(f"data{now}.h5", "w")

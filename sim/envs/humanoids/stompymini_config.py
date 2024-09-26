@@ -224,7 +224,7 @@ class MiniStandingCfg(MiniCfg):
         tracking_sigma = 5.0
         max_contact_force = 400  # forces above this value are penalized
 
-        class scales:
+        class scales(LeggedRobotCfg.rewards.scales):
             # base pos
             default_joint_pos = 0.5
             orientation = 1
