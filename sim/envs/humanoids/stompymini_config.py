@@ -7,7 +7,7 @@ from sim.envs.base.legged_robot_config import (  # type: ignore
 )
 from sim.resources.stompymini.joints import Robot
 
-NUM_JOINTS = len(Robot.all_joints())  # 20
+NUM_JOINTS = len(Robot.all_joints())  # 22
 
 
 class MiniCfg(LeggedRobotCfg):
@@ -65,11 +65,11 @@ class MiniCfg(LeggedRobotCfg):
         terrain_proportions = [0.2, 0.2, 0.4, 0.1, 0.1, 0, 0]
         restitution = 0.0
 
-    class noise:
-        add_noise = True
+    class noise(LeggedRobotCfg.noise):
+        add_noise = False
         noise_level = 0.6  # scales other values
 
-        class noise_scales:
+        class noise_scales(LeggedRobotCfg.noise.noise_scales):
             dof_pos = 0.05
             dof_vel = 0.5
             ang_vel = 0.1
@@ -136,13 +136,13 @@ class MiniCfg(LeggedRobotCfg):
         resampling_time = 8.0  # time before command are changed[s]
         heading_command = True  # if true: compute ang vel command from heading error
 
-        class ranges:
+        class ranges(LeggedRobotCfg.commands.ranges):
             lin_vel_x = [-0.3, 0.6]  # min max [m/s]
             lin_vel_y = [-0.3, 0.3]  # min max [m/s]
             ang_vel_yaw = [-0.3, 0.3]  # min max [rad/s]
             heading = [-3.14, 3.14]
 
-    class rewards:
+    class rewards(LeggedRobotCfg.rewards):
         base_height_target = 0.78
         min_dist = 0.25
         max_dist = 0.5
@@ -157,7 +157,7 @@ class MiniCfg(LeggedRobotCfg):
         tracking_sigma = 5.0
         max_contact_force = 400  # forces above this value are penalized
 
-        class scales:
+        class scales(LeggedRobotCfg.rewards.scales):
             # base pos
             default_joint_pos = 0.5
             orientation = 1
@@ -188,8 +188,8 @@ class MiniCfg(LeggedRobotCfg):
             low_speed = 0.2
             track_vel_hard = 0.5
 
-    class normalization:
-        class obs_scales:
+    class normalization(LeggedRobotCfg.normalization):
+        class obs_scales(LeggedRobotCfg.normalization.obs_scales):
             lin_vel = 2.0
             ang_vel = 1.0
             dof_pos = 1.0
@@ -200,7 +200,7 @@ class MiniCfg(LeggedRobotCfg):
         clip_observations = 18.0
         clip_actions = 18.0
 
-    class viewer:
+    class viewer(LeggedRobotCfg.viewer):
         ref_env = 0
         pos = [4, -4, 2]
         lookat = [0, -2, 0]
@@ -209,7 +209,7 @@ class MiniCfg(LeggedRobotCfg):
 class MiniStandingCfg(MiniCfg):
     """Configuration class for the Legs humanoid robot."""
 
-    class rewards:
+    class rewards(LeggedRobotCfg.rewards):
         base_height_target = 0.78
         min_dist = 0.25
         max_dist = 0.5
@@ -267,6 +267,6 @@ class MiniCfgPPO(LeggedRobotCfgPPO):
         run_name = ""
         # load and resume
         resume = False
-        load_run = -1  # -1 = last run
-        checkpoint = -1  # -1 = last saved model
+        load_run = -1  # last run
+        checkpoint = -1  # last saved model
         resume_path = None  # updated from load_run and chkpt
