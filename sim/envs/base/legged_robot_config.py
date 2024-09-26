@@ -42,22 +42,26 @@ class LeggedRobotCfg(BaseConfig):
             elif isinstance(value, list):
                 return str(value)
             elif isinstance(value, dict):
-                return '\n' + '\n'.join(f"{'  ' * (indent + 1)}{k}: {format_value(v, indent + 1)}" for k, v in value.items())
-            elif hasattr(value, '__dict__'):
-                return '\n' + '\n'.join(f"{'  ' * (indent + 1)}{k}: {format_value(getattr(value, k), indent + 1)}" 
-                                        for k in dir(value) 
-                                        if not k.startswith('__') and not callable(getattr(value, k)))
+                return "\n" + "\n".join(
+                    f"{'  ' * (indent + 1)}{k}: {format_value(v, indent + 1)}" for k, v in value.items()
+                )
+            elif hasattr(value, "__dict__"):
+                return "\n" + "\n".join(
+                    f"{'  ' * (indent + 1)}{k}: {format_value(getattr(value, k), indent + 1)}"
+                    for k in dir(value)
+                    if not k.startswith("__") and not callable(getattr(value, k))
+                )
             else:
                 return str(value)
 
         output = []
         for attr in dir(self):
-            if not attr.startswith('__') and not callable(getattr(self, attr)):
+            if not attr.startswith("__") and not callable(getattr(self, attr)):
                 value = getattr(self, attr)
                 formatted_value = format_value(value)
                 output.append(f"{attr}: {formatted_value}")
 
-        return '\n'.join(output)
+        return "\n".join(output)
 
     def __repr__(self):
         return self.__str__()
@@ -254,6 +258,7 @@ class LeggedRobotCfg(BaseConfig):
             max_gpu_contact_pairs = 2**23  # 2**24 -> needed for 8000 envs and more
             default_buffer_size_multiplier = 5
             contact_collection = 2  # 0: never, 1: last sub-step, 2: all sub-steps (default=2)
+
 
 class LeggedRobotCfgPPO(BaseConfig):
     seed = 1
