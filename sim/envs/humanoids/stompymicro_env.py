@@ -1,8 +1,6 @@
 # mypy: disable-error-code="valid-newtype"
 """Defines the environment for training the humanoid."""
 
-import logging
-
 from sim.envs.base.legged_robot import LeggedRobot
 from sim.resources.stompymicro.joints import Robot
 from sim.utils.terrain import HumanoidTerrain
@@ -11,8 +9,6 @@ from isaacgym import gymtorch  # isort:skip
 from isaacgym.torch_utils import *  # isort: skip
 
 import torch  # isort:skip
-
-logger = logging.Logger(__name__)
 
 
 class StompyMicroEnv(LeggedRobot):
@@ -67,7 +63,18 @@ class StompyMicroEnv(LeggedRobot):
             joint_handle = self.gym.find_actor_dof_handle(env_handle, actor_handle, joint)
             self.legs_joints["right_" + name] = joint_handle
 
-        print(self.legs_joints)
+        self.arms_joints = {}
+        for name, joint in Robot.left_arm.joints_motors():
+            joint_handle = self.gym.find_actor_dof_handle(env_handle, actor_handle, joint)
+            self.arms_joints["left_" + name] = joint_handle
+
+
+        for name, joint in Robot.right_arm.joints_motors():
+            joint_handle = self.gym.find_actor_dof_handle(env_handle, actor_handle, joint)
+            self.arms_joints["right_" + name] = joint_handle
+
+        print(f"{self.legs_joints = }")
+        print(f"{self.arms_joints = }")
 
         self.compute_observations()
 
