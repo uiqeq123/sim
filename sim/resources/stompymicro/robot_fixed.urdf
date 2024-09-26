@@ -1,5 +1,5 @@
 <?xml version="1.0" ?>
-<robot name="tla_v02_legs">
+<robot name="torso">
   <link name="base">
     <inertial>
       <origin rpy="0 0 0" xyz="0 0 0"/>
@@ -29,13 +29,13 @@
       </geometry>
     </collision>
     <inertial>
-      <mass value="0.135498239"/>
-      <inertia ixx="3.5912939543553395e-05" iyy="0.00010527900978101667" izz="0.00012328424778591687" ixy="-8.470329472543003e-22" ixz="-4.235164736271502e-22" iyz="1.2193650325900028e-06"/>
-      <origin xyz="0.0 -0.008378486588401126 -0.002859740555584406" rpy="0 0 0"/>
+      <mass value="0.987160788"/>
+      <inertia ixx="0.0016073099669088285" iyy="0.002731825411607407" izz="0.0016064439039334" ixy="-1.2994197846373817e-06" ixz="-6.828434040047376e-06" iyz="3.261325890580442e-05"/>
+      <origin xyz="0.00027022772554781237 -0.01529435119645623 0.056659579619759266" rpy="0 0 0"/>
     </inertial>
   </link>
-  <joint name="right_hip_pitch" type="revolute">
-    <origin xyz="-0.0428138310841906 -0.023482760616461606 -0.004372827248230849" rpy="-3.1415926071795863 1.5707963 0.0"/>
+  <joint name="left_hip_pitch" type="revolute">
+    <origin xyz="0.0413138310841906 -0.023482760686076916 -0.004372827208038505" rpy="-3.1415926071795863 -1.5707963 0.0"/>
     <parent link="Base_Motor_Mount"/>
     <child link="DRIVING_ROTOR_PLATE"/>
     <limit effort="80" velocity="5" lower="-1.5707963" upper="1.5707963"/>
@@ -58,13 +58,13 @@
       </geometry>
     </collision>
     <inertial>
-      <mass value="0.06789254880000001"/>
-      <inertia ixx="1.4058490668551904e-05" iyy="2.0659571080279552e-05" izz="1.85050695445503e-05" ixy="-4.90536980885998e-08" ixz="1.0247969818343788e-06" iyz="-7.732762438841306e-08"/>
-      <origin xyz="-0.007392120408765606 0.00032656634051300194 0.019957405295933567" rpy="0 0 0"/>
+      <mass value="0.0679127138"/>
+      <inertia ixx="1.4076137007685028e-05" iyy="2.0673689954937143e-05" izz="1.8530190639060646e-05" ixy="9.017256408005559e-08" ixz="-1.0261459226649693e-06" iyz="-1.5211224576345983e-07"/>
+      <origin xyz="0.007398993110512667 0.0007075912421138948 0.01995826423917952" rpy="0 0 0"/>
     </inertial>
   </link>
-  <joint name="left_hip_pitch" type="revolute">
-    <origin xyz="0.0413138310841906 -0.023482760686076916 -0.004372827208038505" rpy="-3.1415926071795863 -1.5707963 0.0"/>
+  <joint name="right_hip_pitch" type="revolute">
+    <origin xyz="-0.04131383051044278 -0.023482760691961528 -0.004372827208038465" rpy="-3.1415925803846902 1.570796288901191 0.0"/>
     <parent link="Base_Motor_Mount"/>
     <child link="DRIVING_ROTOR_PLATE_2"/>
     <limit effort="80" velocity="5" lower="-1.5707963" upper="1.5707963"/>
@@ -87,16 +87,16 @@
       </geometry>
     </collision>
     <inertial>
-      <mass value="0.0679127138"/>
-      <inertia ixx="1.4076137007685028e-05" iyy="2.0673689954937143e-05" izz="1.8530190639060646e-05" ixy="9.017256408005559e-08" ixz="-1.0261459226649693e-06" iyz="-1.5211224576345983e-07"/>
-      <origin xyz="0.007398993110512667 0.0007075912421138948 0.01995826423917952" rpy="0 0 0"/>
+      <mass value="0.06789254880000001"/>
+      <inertia ixx="1.4058490668551904e-05" iyy="2.0659571080279552e-05" izz="1.85050695445503e-05" ixy="-4.90536980885998e-08" ixz="1.0247969818343788e-06" iyz="-7.732762438841306e-08"/>
+      <origin xyz="-0.007392120408765606 0.00032656634051300194 0.019957405295933567" rpy="0 0 0"/>
     </inertial>
   </link>
   <joint name="left_shoulder_pitch" type="revolute">
     <origin xyz="0.07131383054661666 -0.023482764740008488 0.10812717280524366" rpy="-3.141592653589792 -1.5707962732050302 0.0"/>
     <parent link="Base_Motor_Mount"/>
     <child link="DRIVING_ROTOR_PLATE_3"/>
-    <limit effort="80" velocity="5" lower="-0.087266463" upper="1.5707963"/>
+    <limit effort="80" velocity="5" lower="-1.5707963" upper="1.5707963"/>
     <axis xyz="0 0 -1"/>
   </joint>
   <link name="DRIVING_ROTOR_PLATE_3">
@@ -116,16 +116,16 @@
       </geometry>
     </collision>
     <inertial>
-      <mass value="0.19605975280000001"/>
-      <inertia ixx="8.948072091503888e-05" iyy="5.493774484905203e-05" izz="6.547848468423842e-05" ixy="4.323569998298405e-10" ixz="6.946421568683275e-09" iyz="-2.406733881337123e-08"/>
-      <origin xyz="-1.5178600846561182e-06 0.03205306838749962 -0.032500307709879536" rpy="0 0 0"/>
+      <mass value="0.0295473156"/>
+      <inertia ixx="1.2717895333190895e-05" iyy="9.949412566470693e-06" izz="1.222588281334505e-05" ixy="1.0984901645860632e-07" ixz="1.9980215385254045e-06" iyz="-1.8685067322848477e-08"/>
+      <origin xyz="-0.0023907961919948637 -0.0009028980436851127 0.015410917096522989" rpy="0 0 0"/>
     </inertial>
   </link>
   <joint name="right_shoulder_pitch" type="revolute">
     <origin xyz="-0.07131383054661666 -0.023482764740008488 0.10812717280524366" rpy="-3.141592653589792 1.5707962732050302 0.0"/>
     <parent link="Base_Motor_Mount"/>
     <child link="DRIVING_ROTOR_PLATE_4"/>
-    <limit effort="80" velocity="5" lower="-1.5707963" upper="0.087266463"/>
+    <limit effort="80" velocity="5" lower="-1.5707963" upper="1.5707963"/>
     <axis xyz="0 0 -1"/>
   </joint>
   <link name="DRIVING_ROTOR_PLATE_4">
@@ -145,16 +145,16 @@
       </geometry>
     </collision>
     <inertial>
-      <mass value="0.19605975280000001"/>
-      <inertia ixx="8.948072091503888e-05" iyy="5.493774484905203e-05" izz="6.547848468423842e-05" ixy="4.323569998298405e-10" ixz="6.946421568683275e-09" iyz="-2.406733881337123e-08"/>
-      <origin xyz="-1.5178600846561182e-06 0.03205306838749962 -0.032500307709879536" rpy="0 0 0"/>
+      <mass value="0.0295473156"/>
+      <inertia ixx="1.269790142408461e-05" iyy="9.949412560193235e-06" izz="1.2205888897961306e-05" ixy="1.6574806217201653e-08" ixz="-1.9980215447388342e-06" iyz="-6.342814002300008e-08"/>
+      <origin xyz="0.0023907962421848383 0.001101653747757804 0.015410917096522989" rpy="0 0 0"/>
     </inertial>
   </link>
-  <joint name="right_hip_yaw" type="revolute">
-    <origin xyz="0.007399999685828183 0.016450000198282227 0.02284999703643316" rpy="-1.5707962535897932 -1.570796273205031 0.0"/>
+  <joint name="left_hip_yaw" type="revolute">
+    <origin xyz="-0.007400000327569208 0.016949999801717745 0.02285000258156657" rpy="-1.5707963071795867 1.5707963196152375 0.0"/>
     <parent link="DRIVING_ROTOR_PLATE"/>
     <child link="DRIVING_ROTOR_PLATE_5"/>
-    <limit effort="80" velocity="5" lower="-0.52359878" upper="0.52359878"/>
+    <limit effort="80" velocity="5" lower="-1.5707963" upper="0.087266463"/>
     <axis xyz="0 0 -1"/>
   </joint>
   <link name="DRIVING_ROTOR_PLATE_5">
@@ -179,11 +179,11 @@
       <origin xyz="-1.5178600846538283e-06 0.03205306838749962 -0.03250030770987955" rpy="0 0 0"/>
     </inertial>
   </link>
-  <joint name="left_hip_yaw" type="revolute">
-    <origin xyz="-0.007400000327569208 0.016949999801717745 0.02285000258156657" rpy="-1.5707963071795867 1.5707963196152375 0.0"/>
+  <joint name="right_hip_yaw" type="revolute">
+    <origin xyz="0.007399999685828183 0.016450000198282227 0.02284999703643316" rpy="-1.5707962535897932 -1.570796273205031 0.0"/>
     <parent link="DRIVING_ROTOR_PLATE_2"/>
     <child link="DRIVING_ROTOR_PLATE_6"/>
-    <limit effort="80" velocity="5" lower="-1.5707963" upper="0.087266463"/>
+    <limit effort="80" velocity="5" lower="-0.087266463" upper="1.5707963"/>
     <axis xyz="0 0 -1"/>
   </joint>
   <link name="DRIVING_ROTOR_PLATE_6">
@@ -266,7 +266,7 @@
       <origin xyz="-4.3086370670521697e-10 -0.035130554915159456 -0.01617289663503479" rpy="0 0 0"/>
     </inertial>
   </link>
-  <joint name="right_elbow_yaw" type="revolute">
+  <joint name="left_elbow_yaw" type="revolute">
     <origin xyz="-1.4993347535741108e-10 -0.07020000022229234 0.0" rpy="0.0 0.0 -3.14159264"/>
     <parent link="LX-16A"/>
     <child link="DRIVING_ROTOR_PLATE_7"/>
@@ -295,7 +295,7 @@
       <origin xyz="0.019591879748340407 0.013718381430064363 -0.016897508396865997" rpy="0 0 0"/>
     </inertial>
   </link>
-  <joint name="left_elbow_yaw" type="revolute">
+  <joint name="right_elbow_yaw" type="revolute">
     <origin xyz="-1.5347855347735972e-09 -0.0702000019724337 -1.7232110183229565e-09" rpy="0.0 -2.220446049250313e-15 3.1415926071795868"/>
     <parent link="LX-16A_2"/>
     <child link="DRIVING_ROTOR_PLATE_8"/>
@@ -349,8 +349,8 @@
     </collision>
     <inertial>
       <mass value="0.0598570834"/>
-      <inertia ixx="1.823217568540487e-05" iyy="2.0991335782140143e-05" izz="8.409616105472036e-06" ixy="1.3228288723355352e-10" ixz="8.930945931712143e-09" iyz="-8.777827677214932e-09"/>
-      <origin xyz="0.00025981497699534295 -8.182990713358013e-06 0.02475360973578543" rpy="0 0 0"/>
+      <inertia ixx="1.823217568539259e-05" iyy="2.0991335782152405e-05" izz="8.409616105472035e-06" ixy="1.3215483404353818e-10" ixz="-8.930946339099605e-09" iyz="8.777827262728728e-09"/>
+      <origin xyz="-0.00025981497737510276 8.182978655286598e-06 0.024753609735785415" rpy="0 0 0"/>
     </inertial>
   </link>
   <joint name="right_hip_roll" type="revolute">
@@ -358,122 +358,6 @@
     <parent link="DRIVING_ROTOR_PLATE_6"/>
     <child link="DRIVING_ROTOR_PLATE_10"/>
     <limit effort="80" velocity="5" lower="-0.52359878" upper="0.52359878"/>
-    <axis xyz="0 0 -1"/>
-  </joint>
-  <link name="DRIVING_ROTOR_PLATE_6">
-    <visual>
-      <origin xyz="0 0 0" rpy="0 0 0"/>
-      <geometry>
-        <mesh filename="meshes/DRIVING_ROTOR_PLATE_6.stl"/>
-      </geometry>
-      <material name="DRIVING_ROTOR_PLATE_material_6">
-        <color rgba="0.64705882 0.64705882 0.64705882 1"/>
-      </material>
-    </visual>
-    <collision>
-      <origin xyz="0 0 0" rpy="0 0 0"/>
-      <geometry>
-        <mesh filename="meshes/DRIVING_ROTOR_PLATE_6.stl"/>
-      </geometry>
-    </collision>
-    <inertial>
-      <mass value="0.0598570834"/>
-      <inertia ixx="1.823217568539259e-05" iyy="2.0991335782152405e-05" izz="8.409616105472035e-06" ixy="1.3215483404353818e-10" ixz="-8.930946339099605e-09" iyz="8.777827262728728e-09"/>
-      <origin xyz="-0.00025981497737510276 8.182978655286598e-06 0.024753609735785415" rpy="0 0 0"/>
-    </inertial>
-  </link>
-  <joint name="right_knee_pitch" type="revolute">
-    <origin xyz="0.01623087751044278 -1.7762673623633596e-09 0.04169999999196149" rpy="1.5707963535897942 -4.6410206566704915e-08 1.5707963000000003"/>
-    <parent link="DRIVING_ROTOR_PLATE_5"/>
-    <child link="DRIVING_ROTOR_PLATE_7"/>
-    <limit effort="80" velocity="5" lower="-1.5707963" upper="1.5707963"/>
-    <axis xyz="0 0 -1"/>
-  </joint>
-  <link name="DRIVING_ROTOR_PLATE_7">
-    <visual>
-      <origin xyz="0 0 0" rpy="0 0 0"/>
-      <geometry>
-        <mesh filename="meshes/DRIVING_ROTOR_PLATE_7.stl"/>
-      </geometry>
-      <material name="DRIVING_ROTOR_PLATE_material_7">
-        <color rgba="0.64705882 0.64705882 0.64705882 1"/>
-      </material>
-    </visual>
-    <collision>
-      <origin xyz="0 0 0" rpy="0 0 0"/>
-      <geometry>
-        <mesh filename="meshes/DRIVING_ROTOR_PLATE_7.stl"/>
-      </geometry>
-    </collision>
-    <inertial>
-      <mass value="0.0704091068"/>
-      <inertia ixx="3.0359362335765197e-05" iyy="1.3560118279717606e-05" izz="2.474586405226499e-05" ixy="1.896867045434681e-08" ixz="-1.7236612927176258e-09" iyz="7.720524526181664e-07"/>
-      <origin xyz="1.5398640199441563e-05 0.03491858031357025 -0.01574510549362237" rpy="0 0 0"/>
-    </inertial>
-  </link>
-  <joint name="left_knee_pitch" type="revolute">
-    <origin xyz="-0.01623087751044281 1.0229889869234343e-09 0.04169999999196149" rpy="1.5707963535897935 -4.641020678874952e-08 -1.5707963071795867"/>
-    <parent link="DRIVING_ROTOR_PLATE_6"/>
-    <child link="DRIVING_ROTOR_PLATE_8"/>
-    <limit effort="80" velocity="5" lower="-1.5707963" upper="1.5707963"/>
-    <axis xyz="0 0 -1"/>
-  </joint>
-  <link name="DRIVING_ROTOR_PLATE_8">
-    <visual>
-      <origin xyz="0 0 0" rpy="0 0 0"/>
-      <geometry>
-        <mesh filename="meshes/DRIVING_ROTOR_PLATE_8.stl"/>
-      </geometry>
-      <material name="DRIVING_ROTOR_PLATE_material_8">
-        <color rgba="0.64705882 0.64705882 0.64705882 1"/>
-      </material>
-    </visual>
-    <collision>
-      <origin xyz="0 0 0" rpy="0 0 0"/>
-      <geometry>
-        <mesh filename="meshes/DRIVING_ROTOR_PLATE_8.stl"/>
-      </geometry>
-    </collision>
-    <inertial>
-      <mass value="0.0704091068"/>
-      <inertia ixx="3.0359362335765197e-05" iyy="1.3560118279717606e-05" izz="2.474586405226499e-05" ixy="1.896867045434681e-08" ixz="-1.7236612927176258e-09" iyz="7.720524526181664e-07"/>
-      <origin xyz="1.5398640199441563e-05 0.03491858031357025 -0.01574510549362237" rpy="0 0 0"/>
-    </inertial>
-  </link>
-  <joint name="right_ankle_pitch" type="revolute">
-    <origin xyz="-1.204344863420248e-09 0.0552000002775737 -0.00031912410434488224" rpy="4.963083675318156e-23 -2.220446049250313e-15 4.998164106755064e-23"/>
-    <parent link="DRIVING_ROTOR_PLATE_7"/>
-    <child link="DRIVING_ROTOR_PLATE_9"/>
-    <limit effort="80" velocity="5" lower="-1.5707963" upper="1.5707963"/>
-    <axis xyz="0 0 -1"/>
-  </joint>
-  <link name="DRIVING_ROTOR_PLATE_9">
-    <visual>
-      <origin xyz="0 0 0" rpy="0 0 0"/>
-      <geometry>
-        <mesh filename="meshes/DRIVING_ROTOR_PLATE_9.stl"/>
-      </geometry>
-      <material name="DRIVING_ROTOR_PLATE_material_9">
-        <color rgba="0.64705882 0.64705882 0.64705882 1"/>
-      </material>
-    </visual>
-    <collision>
-      <origin xyz="0 0 0" rpy="0 0 0"/>
-      <geometry>
-        <mesh filename="meshes/DRIVING_ROTOR_PLATE_9.stl"/>
-      </geometry>
-    </collision>
-    <inertial>
-      <mass value="0.0450552098"/>
-      <inertia ixx="1.5993648311403457e-05" iyy="4.0322322116535056e-05" izz="2.901124467393779e-05" ixy="-1.373935242771244e-07" ixz="7.590957598939323e-09" iyz="3.3270022215792026e-08"/>
-      <origin xyz="0.0036276328125742535 0.01589961584119004 -0.015230590925420985" rpy="0 0 0"/>
-    </inertial>
-  </link>
-  <joint name="left_ankle_pitch" type="revolute">
-    <origin xyz="-1.204344863420248e-09 0.0552000002775737 -0.00031912410434488224" rpy="4.963083675318156e-23 -2.220446049250313e-15 4.998164106755064e-23"/>
-    <parent link="DRIVING_ROTOR_PLATE_8"/>
-    <child link="DRIVING_ROTOR_PLATE_10"/>
-    <limit effort="80" velocity="5" lower="-1.5707963" upper="1.5707963"/>
     <axis xyz="0 0 -1"/>
   </joint>
   <link name="DRIVING_ROTOR_PLATE_10">
@@ -493,9 +377,125 @@
       </geometry>
     </collision>
     <inertial>
+      <mass value="0.0598570834"/>
+      <inertia ixx="1.823217568540487e-05" iyy="2.0991335782140143e-05" izz="8.409616105472036e-06" ixy="1.3228288723355352e-10" ixz="8.930945931712143e-09" iyz="-8.777827677214932e-09"/>
+      <origin xyz="0.00025981497699534295 -8.182990713358013e-06 0.02475360973578543" rpy="0 0 0"/>
+    </inertial>
+  </link>
+  <joint name="left_knee_pitch" type="revolute">
+    <origin xyz="-0.01623087751044281 1.0229889869234343e-09 0.04169999999196149" rpy="1.5707963535897935 -4.641020678874952e-08 -1.5707963071795867"/>
+    <parent link="DRIVING_ROTOR_PLATE_9"/>
+    <child link="DRIVING_ROTOR_PLATE_11"/>
+    <limit effort="80" velocity="5" lower="-1.5707963" upper="1.5707963"/>
+    <axis xyz="0 0 -1"/>
+  </joint>
+  <link name="DRIVING_ROTOR_PLATE_11">
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry>
+        <mesh filename="meshes/DRIVING_ROTOR_PLATE_11.stl"/>
+      </geometry>
+      <material name="DRIVING_ROTOR_PLATE_material_11">
+        <color rgba="0.64705882 0.64705882 0.64705882 1"/>
+      </material>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry>
+        <mesh filename="meshes/DRIVING_ROTOR_PLATE_11.stl"/>
+      </geometry>
+    </collision>
+    <inertial>
+      <mass value="0.0704091068"/>
+      <inertia ixx="3.0359362335765197e-05" iyy="1.3560118279717606e-05" izz="2.474586405226499e-05" ixy="1.896867045434681e-08" ixz="-1.7236612927176258e-09" iyz="7.720524526181664e-07"/>
+      <origin xyz="1.5398640199441563e-05 0.03491858031357025 -0.01574510549362237" rpy="0 0 0"/>
+    </inertial>
+  </link>
+  <joint name="right_knee_pitch" type="revolute">
+    <origin xyz="0.01623087751044278 -1.7762673623633596e-09 0.04169999999196149" rpy="1.5707963535897942 -4.6410206566704915e-08 1.5707963000000003"/>
+    <parent link="DRIVING_ROTOR_PLATE_10"/>
+    <child link="DRIVING_ROTOR_PLATE_12"/>
+    <limit effort="80" velocity="5" lower="-1.5707963" upper="1.5707963"/>
+    <axis xyz="0 0 -1"/>
+  </joint>
+  <link name="DRIVING_ROTOR_PLATE_12">
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry>
+        <mesh filename="meshes/DRIVING_ROTOR_PLATE_12.stl"/>
+      </geometry>
+      <material name="DRIVING_ROTOR_PLATE_material_12">
+        <color rgba="0.64705882 0.64705882 0.64705882 1"/>
+      </material>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry>
+        <mesh filename="meshes/DRIVING_ROTOR_PLATE_12.stl"/>
+      </geometry>
+    </collision>
+    <inertial>
+      <mass value="0.0704091068"/>
+      <inertia ixx="3.0359362335765197e-05" iyy="1.3560118279717606e-05" izz="2.474586405226499e-05" ixy="1.896867045434681e-08" ixz="-1.7236612927176258e-09" iyz="7.720524526181664e-07"/>
+      <origin xyz="1.5398640199441563e-05 0.03491858031357025 -0.01574510549362237" rpy="0 0 0"/>
+    </inertial>
+  </link>
+  <joint name="left_ankle_pitch" type="revolute">
+    <origin xyz="-1.204344863420248e-09 0.0552000002775737 -0.00031912410434488224" rpy="4.963083675318156e-23 -2.220446049250313e-15 4.998164106755064e-23"/>
+    <parent link="DRIVING_ROTOR_PLATE_11"/>
+    <child link="DRIVING_ROTOR_PLATE_13"/>
+    <limit effort="80" velocity="5" lower="-1.5707963" upper="1.5707963"/>
+    <axis xyz="0 0 -1"/>
+  </joint>
+  <link name="DRIVING_ROTOR_PLATE_13">
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry>
+        <mesh filename="meshes/DRIVING_ROTOR_PLATE_13.stl"/>
+      </geometry>
+      <material name="DRIVING_ROTOR_PLATE_material_13">
+        <color rgba="0.64705882 0.64705882 0.64705882 1"/>
+      </material>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry>
+        <mesh filename="meshes/DRIVING_ROTOR_PLATE_13.stl"/>
+      </geometry>
+    </collision>
+    <inertial>
       <mass value="0.0450744538"/>
       <inertia ixx="1.6003637322367507e-05" iyy="4.0363811169396464e-05" izz="2.904281722986846e-05" ixy="1.380142438620402e-07" ixz="-7.625648292126262e-09" iyz="3.327421359097439e-08"/>
       <origin xyz="-0.0036440005311199914 0.015900201329369885 -0.015230661517573501" rpy="0 0 0"/>
+    </inertial>
+  </link>
+  <joint name="right_ankle_pitch" type="revolute">
+    <origin xyz="-1.204344863420248e-09 0.0552000002775737 -0.00031912410434488224" rpy="4.963083675318156e-23 -2.220446049250313e-15 4.998164106755064e-23"/>
+    <parent link="DRIVING_ROTOR_PLATE_12"/>
+    <child link="DRIVING_ROTOR_PLATE_14"/>
+    <limit effort="80" velocity="5" lower="-1.5707963" upper="1.5707963"/>
+    <axis xyz="0 0 -1"/>
+  </joint>
+  <link name="DRIVING_ROTOR_PLATE_14">
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry>
+        <mesh filename="meshes/DRIVING_ROTOR_PLATE_14.stl"/>
+      </geometry>
+      <material name="DRIVING_ROTOR_PLATE_material_14">
+        <color rgba="0.64705882 0.64705882 0.64705882 1"/>
+      </material>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry>
+        <mesh filename="meshes/DRIVING_ROTOR_PLATE_14.stl"/>
+      </geometry>
+    </collision>
+    <inertial>
+      <mass value="0.0450552098"/>
+      <inertia ixx="1.5993648311403457e-05" iyy="4.0322322116535056e-05" izz="2.901124467393779e-05" ixy="-1.373935242771244e-07" ixz="7.590957598939323e-09" iyz="3.3270022215792026e-08"/>
+      <origin xyz="0.0036276328125742535 0.01589961584119004 -0.015230590925420985" rpy="0 0 0"/>
     </inertial>
   </link>
 </robot>

@@ -64,12 +64,12 @@ class StompyMicroEnv(LeggedRobot):
             self.legs_joints["right_" + name] = joint_handle
 
         self.arms_joints = {}
-        for name, joint in Robot.left_arm.joints_motors():
+        for name, joint in Robot.arms.left.joints_motors():
             joint_handle = self.gym.find_actor_dof_handle(env_handle, actor_handle, joint)
             self.arms_joints["left_" + name] = joint_handle
 
 
-        for name, joint in Robot.right_arm.joints_motors():
+        for name, joint in Robot.arms.right.joints_motors():
             joint_handle = self.gym.find_actor_dof_handle(env_handle, actor_handle, joint)
             self.arms_joints["right_" + name] = joint_handle
 
@@ -137,14 +137,14 @@ class StompyMicroEnv(LeggedRobot):
         # left foot stance phase set to default joint pos
         sin_pos_l[sin_pos_l > 0] = 0
         self.ref_dof_pos[:, self.legs_joints["left_hip_pitch"]] += sin_pos_l * scale_1
-        self.ref_dof_pos[:, self.legs_joints["left_knee_rotate"]] += sin_pos_l * scale_2
-        self.ref_dof_pos[:, self.legs_joints["left_foot_rotate"]] += sin_pos_l * scale_1
+        self.ref_dof_pos[:, self.legs_joints["left_knee_pitch"]] += sin_pos_l * scale_2
+        self.ref_dof_pos[:, self.legs_joints["left_ankle_pitch"]] += sin_pos_l * scale_1
 
         # right foot stance phase set to default joint pos
         sin_pos_r[sin_pos_r < 0] = 0
         self.ref_dof_pos[:, self.legs_joints["right_hip_pitch"]] += sin_pos_r * scale_1
-        self.ref_dof_pos[:, self.legs_joints["right_knee_rotate"]] += sin_pos_r * scale_2
-        self.ref_dof_pos[:, self.legs_joints["right_foot_rotate"]] += sin_pos_r * scale_1
+        self.ref_dof_pos[:, self.legs_joints["right_knee_pitch"]] += sin_pos_r * scale_2
+        self.ref_dof_pos[:, self.legs_joints["right_ankle_pitch"]] += sin_pos_r * scale_1
 
         # Double support phase
         self.ref_dof_pos[torch.abs(sin_pos) < 0.1] = 0
@@ -374,15 +374,9 @@ class StompyMicroEnv(LeggedRobot):
         on penalizing deviation in yaw and roll directions. Excludes yaw and roll from the main penalty.
         """
         joint_diff = self.dof_pos - self.default_joint_pd_target
-        left_yaw = joint_diff[:, self.legs_joints["left_hip_roll"]]
-        right_yaw = joint_diff[:, self.legs_joints["right_hip_roll"]]
-
-        # TODO: check with pawel about dimensions
-        # reshape tensors to 2D if they are 1D
-        left_yaw = left_yaw.unsqueeze(1) if left_yaw.dim() == 1 else left_yaw
-        right_yaw = right_yaw.unsqueeze(1) if right_yaw.dim() == 1 else right_yaw
-
-        yaw_roll = torch.norm(left_yaw, dim=1) + torch.norm(right_yaw, dim=1)
+        left_yaw_roll = joint_diff[:, [self.legs_joints["left_hip_roll"], self.legs_joints["left_hip_yaw"]]]
+        right_yaw_roll = joint_diff[:, [self.legs_joints["right_hip_roll"], self.legs_joints["right_hip_yaw"]]]
+        yaw_roll = torch.norm(left_yaw_roll, dim=1) + torch.norm(right_yaw_roll, dim=1)
         yaw_roll = torch.clamp(yaw_roll - 0.1, 0, 50)
 
         return torch.exp(-yaw_roll * 100) - 0.01 * torch.norm(joint_diff, dim=1)
@@ -541,3 +535,9 @@ class StompyMicroEnv(LeggedRobot):
         )
         term_3 = 0.05 * torch.sum(torch.abs(self.actions), dim=1)
         return term_1 + term_2 + term_3
+
+    def _reward_ang_vel_xy(self):
+        return 0
+
+    def _reward_lin_vel_z(self):
+        return 0
