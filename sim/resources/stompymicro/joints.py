@@ -92,7 +92,7 @@ class Legs(Node):
 
 class Robot(Node):
     height = 0.21
-    rotation = [0.5000, -0.4996, -0.5000, 0.5004]
+    rotation = [0, 0, 0, 1]
 
     arms = Arms()
     legs = Legs()
@@ -129,26 +129,74 @@ class Robot(Node):
         return {
             # Arms
             ## Left arm
-            cls.arms.left.shoulder_pitch: {"lower": -1.57, "upper": 1.57},
-            cls.arms.left.shoulder_yaw: {"lower": -1.57, "upper": 1.57},
-            cls.arms.left.elbow_pitch: {"lower": -1.57, "upper": 1.57},
+            cls.arms.left.shoulder_pitch: {
+                "lower": -1.57,
+                "upper": 1.57,
+            },
+            cls.arms.left.shoulder_yaw: {
+                "lower": -1.57,
+                "upper": 1.57,
+            },
+            cls.arms.left.elbow_pitch: {
+                "lower": -1.57,
+                "upper": 1.57,
+            },
             ## Right arm
-            cls.arms.right.shoulder_pitch: {"lower": -1.57, "upper": 1.57},
-            cls.arms.right.shoulder_yaw: {"lower": -1.57, "upper": 1.57},
-            cls.arms.right.elbow_pitch: {"lower": -1.57, "upper": 1.57},
+            cls.arms.right.shoulder_pitch: {
+                "lower": -1.57,
+                "upper": 1.57,
+            },
+            cls.arms.right.shoulder_yaw: {
+                "lower": -1.57,
+                "upper": 1.57,
+            },
+            cls.arms.right.elbow_pitch: {
+                "lower": -1.57,
+                "upper": 1.57,
+            },
             # Legs
             ## Left leg
-            cls.legs.left.hip_pitch: {"lower": -1.57, "upper": 1.57},
-            cls.legs.left.hip_yaw: {"lower": -1.57, "upper": 1.57},
-            cls.legs.left.hip_roll: {"lower": -1.57, "upper": 1.57},
-            cls.legs.left.knee_pitch: {"lower": -1.57, "upper": 1.57},
-            cls.legs.left.ankle_pitch: {"lower": -1.57, "upper": 1.57},
+            cls.legs.left.hip_pitch: {
+                "lower": -1.57,
+                "upper": 1.57,
+            },
+            cls.legs.left.hip_yaw: {
+                "lower": -1.57,
+                "upper": 1.57,
+            },
+            cls.legs.left.hip_roll: {
+                "lower": -1.57,
+                "upper": 1.57,
+            },
+            cls.legs.left.knee_pitch: {
+                "lower": -1.57,
+                "upper": 1.57,
+            },
+            cls.legs.left.ankle_pitch: {
+                "lower": -1.57,
+                "upper": 1.57,
+            },
             ## Right leg
-            cls.legs.right.hip_pitch: {"lower": -1.57, "upper": 1.57},
-            cls.legs.right.hip_yaw: {"lower": -1.57, "upper": 1.57},
-            cls.legs.right.hip_roll: {"lower": -1.57, "upper": 1.57},
-            cls.legs.right.knee_pitch: {"lower": -1.57, "upper": 1.57},
-            cls.legs.right.ankle_pitch: {"lower": -1.57, "upper": 1.57},
+            cls.legs.right.hip_pitch: {
+                "lower": -1.57,
+                "upper": 1.57,
+            },
+            cls.legs.right.hip_yaw: {
+                "lower": -1.57,
+                "upper": 1.57,
+            },
+            cls.legs.right.hip_roll: {
+                "lower": -1.57,
+                "upper": 1.57,
+            },
+            cls.legs.right.knee_pitch: {
+                "lower": -1.57,
+                "upper": 1.57,
+            },
+            cls.legs.right.ankle_pitch: {
+                "lower": -1.57,
+                "upper": 1.57,
+            },
         }
 
     # p_gains
