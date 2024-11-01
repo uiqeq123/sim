@@ -83,6 +83,7 @@ def get_scripted_joint_targets(current_time, cfg, joints):
     Returns:
         np.ndarray: The target joint positions.
     """
+    global save_q
     # Total duration for the scripted behavior
     total_duration = 7.0  # seconds
 
@@ -91,10 +92,10 @@ def get_scripted_joint_targets(current_time, cfg, joints):
 
     # Define time intervals for different actions
     # You can adjust these intervals as needed
-    t0 = 2.0  # Time to let it fall
-    t1 = 4.0  # Time to move arms to position
-    t2 = 6.0  # Time to bend knees
-    t3 = 8.0  # Time to stand up
+    t0 = .033  # Time to let it fall
+    t1 = 1.0  # Time to move arms to position
+    t2 = 2.0  # Time to bend knees
+    t3 = 3.0  # Time to stand up
 
     # lie down
     # Lie down to arms up (0 to t1)
@@ -103,57 +104,50 @@ def get_scripted_joint_targets(current_time, cfg, joints):
 
     if current_time <= t0:
         pass
-    else:# current_time <= t1:
-
-        progress = (current_time - t0) / (t1 - t0)
+    elif current_time <= t1:
+        progress_1 = (current_time - t0) / (t1 - t0)
         # Interpolate arm joints from initial to target position
         # Assuming arm joints are indices 0 and 1 (adjust based on your robot)
         arm_joint_indices = [joints["right_shoulder_pitch"], joints["left_shoulder_pitch"]]  # Replace with actual indices
-        arm_target_positions = np.deg2rad([90, 90])  # Raise arms up
+        arm_target_positions = np.deg2rad([-90, 90])  # Raise arms up
 
         for idx, joint in enumerate(arm_joint_indices):
-            target_q[joint] = np.interp(progress, [0, 1], [0, arm_target_positions[idx]])
+            target_q[joint] = np.interp(progress_1, [0, 1], [0, arm_target_positions[idx]])
 
-    # # Arms up to bend knees (t1 to t2)
-    # elif current_time <= t2:
-    #     progress = (current_time - t1) / (t2 - t1)
-    #     # Keep arms up
-    #     arm_joint_indices = [0, 1]
-    #     arm_target_positions = np.deg2rad([90, 90])  # Arms remain up
-    #     for idx in arm_joint_indices:
-    #         target_q[idx] = arm_target_positions[idx]
-    #     # Interpolate knee joints to bend position
-    #     # Assuming knee joints are indices 2 and 3 (adjust based on your robot)
-    #     knee_joint_indices = [2, 3]  # Replace with actual indices
-    #     knee_bend_positions = np.deg2rad([-90, -90])  # Bend knees
-    #     for idx in knee_joint_indices:
-    #         target_q[idx] = np.interp(progress, [0, 1], [0, knee_bend_positions[idx]])
+        save_q = target_q
+    # Arms up to bend knees (t1 to t2)
+    elif current_time <= t2:
+        target_q = save_q
+        progress = (current_time - t1) / (t2 - t1)
 
-    # # Bend knees to stand up (t2 to t3)
-    # elif current_time <= t3:
-    #     progress = (current_time - t2) / (t3 - t2)
-    #     # Arms remain up
-    #     arm_joint_indices = [0, 1]
-    #     arm_target_positions = np.deg2rad([90, 90])
-    #     for idx in arm_joint_indices:
-    #         target_q[idx] = arm_target_positions[idx]
-    #     # Knees extend to standing position
-    #     knee_joint_indices = [2, 3]
-    #     knee_bend_positions = np.deg2rad([-90, -90])
-    #     for idx in knee_joint_indices:
-    #         target_q[idx] = np.interp(progress, [0, 1], [knee_bend_positions[idx], 0])
+        knee_joint_indices = [joints["right_knee_pitch"], joints["left_knee_pitch"]]  # Replace with actual indices
+        knee_bend_positions = np.deg2rad([-90, 90])  # Bend knees
+        for idx, joint in enumerate(knee_joint_indices):
+            target_q[joint] = np.interp(progress, [0, 1], [0, knee_bend_positions[idx]])
+        save_q = target_q
+    # Bend knees to stand up (t2 to t3)
+    elif current_time <= t3:
+        target_q = save_q
+        progress = (current_time - t2) / (t3 - t2)
 
-    # else:
-    #     # After t3, maintain standing position
-    #     # Arms remain up
-    #     arm_joint_indices = [0, 1]
-    #     arm_target_positions = np.deg2rad([90, 90])
-    #     for idx in arm_joint_indices:
-    #         target_q[idx] = arm_target_positions[idx]
-    #     # Knees fully extended
-    #     knee_joint_indices = [2, 3]
-    #     for idx in knee_joint_indices:
-    #         target_q[idx] = 0.0
+        # Knees extend to standing position
+        pitch_joint_indices = [joints["right_hip_pitch"], joints["left_hip_pitch"]]  # Replace with actual indices
+        pitch_positions = np.deg2rad([-90, 90])  # Bend knees
+        for idx, joint in enumerate(pitch_joint_indices):
+            target_q[joint] = np.interp(progress, [0, 1], [0, pitch_positions[idx]])
+        save_q = target_q
+    else:
+        # After t3, maintain standing position
+        # Arms remain up
+        target_q = save_q
+        arm_joint_indices = [0, 1]
+        arm_target_positions = np.deg2rad([90, 90])
+        for idx in arm_joint_indices:
+            target_q[idx] = arm_target_positions[idx]
+        # Knees fully extended
+        knee_joint_indices = [2, 3]
+        for idx in knee_joint_indices:
+            target_q[idx] = 0.0
 
     return target_q
 
@@ -203,30 +197,14 @@ def run_mujoco_scripted(cfg):
         q = data.qpos[-cfg.num_actions:].astype(np.double)
         dq = data.qvel[-cfg.num_actions:].astype(np.double)
 
-
         # Update target_q based on scripted behavior
         target_q = get_scripted_joint_targets(current_time, cfg, joints)
-
-        # target_q = np.zeros((cfg.num_actions), dtype=np.double)
         target_dq = np.zeros((cfg.num_actions), dtype=np.double)
-        target_q[joints["left_shoulder_yaw"]] = 1.24
-        # # Generate PD control
         tau = pd_control(target_q, q, cfg.kps, target_dq, dq, cfg.kds, default)
-        # tau = np.clip(tau, -cfg.tau_limit, cfg.tau_limit)
-        print(joints["left_shoulder_yaw"])
 
-        tau = np.zeros((cfg.num_actions), dtype=np.double)
-        # tau[joints["left_shoulder_pitch"]] = prediction[joints["left_shoulder_pitch"]]
-
-        tau[joints["left_shoulder_pitch"]] = 1.0 # left shoulder pitch
-        tau[joints["right_shoulder_pitch"]] = -1.0 # left shoulder yaw
-        # tau[9] = 10.0 # right shoulder yaw
-        # tau[10] = 10.0 # right elbow yaw
-        # tau[11] = -2.0 # right hip pitch
         print("tau:", tau)
         print("q:", q)
         print("target_q:", target_q)
-        # breakpoint()
         data.ctrl = tau
 
         mujoco.mj_step(model, data)
