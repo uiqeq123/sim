@@ -100,10 +100,12 @@ def get_scripted_joint_targets(current_time, cfg, joints):
     # Lie down to arms up (0 to t1)
     # breakpoint()
     # let it fall
+
     if current_time <= t0:
         pass
-    elif current_time <= t1:
-        progress = current_time / t1
+    else:# current_time <= t1:
+
+        progress = (current_time - t0) / (t1 - t0)
         # Interpolate arm joints from initial to target position
         # Assuming arm joints are indices 0 and 1 (adjust based on your robot)
         arm_joint_indices = [joints["right_shoulder_pitch"], joints["left_shoulder_pitch"]]  # Replace with actual indices
@@ -189,7 +191,7 @@ def run_mujoco_scripted(cfg):
     mujoco.mj_step(model, data)
     joints = {}
     for ii in range(1, len(data.ctrl)):
-        joints[data.joint(ii).name] = data.joint(ii).id
+        joints[data.joint(ii).name] = data.joint(ii).id - 1
 
     # Initialize target joint positions
     target_q = np.zeros((cfg.num_actions), dtype=np.double)
@@ -205,15 +207,22 @@ def run_mujoco_scripted(cfg):
         # Update target_q based on scripted behavior
         target_q = get_scripted_joint_targets(current_time, cfg, joints)
 
-        target_q = np.zeros((cfg.num_actions), dtype=np.double)
+        # target_q = np.zeros((cfg.num_actions), dtype=np.double)
         target_dq = np.zeros((cfg.num_actions), dtype=np.double)
-
+        target_q[joints["left_shoulder_yaw"]] = 1.24
         # # Generate PD control
         tau = pd_control(target_q, q, cfg.kps, target_dq, dq, cfg.kds, default)
-        tau = np.clip(tau, -cfg.tau_limit, cfg.tau_limit)
- 
+        # tau = np.clip(tau, -cfg.tau_limit, cfg.tau_limit)
+        print(joints["left_shoulder_yaw"])
+
         tau = np.zeros((cfg.num_actions), dtype=np.double)
-        tau[joints["left_shoulder_pitch"]] = 10.0
+        # tau[joints["left_shoulder_pitch"]] = prediction[joints["left_shoulder_pitch"]]
+
+        tau[joints["left_shoulder_pitch"]] = 1.0 # left shoulder pitch
+        tau[joints["right_shoulder_pitch"]] = -1.0 # left shoulder yaw
+        # tau[9] = 10.0 # right shoulder yaw
+        # tau[10] = 10.0 # right elbow yaw
+        # tau[11] = -2.0 # right hip pitch
         print("tau:", tau)
         print("q:", q)
         print("target_q:", target_q)
