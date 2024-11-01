@@ -102,15 +102,15 @@ def get_scripted_joint_targets(current_time, cfg, joints):
     # let it fall
     if current_time <= t0:
         pass
-    # elif current_time <= t1:
-    #     progress = current_time / t1
-    #     # Interpolate arm joints from initial to target position
-    #     # Assuming arm joints are indices 0 and 1 (adjust based on your robot)
-    #     arm_joint_indices = [joints["right_shoulder_pitch"], joints["left_shoulder_pitch"]]  # Replace with actual indices
-    #     arm_target_positions = np.deg2rad([90, 90])  # Raise arms up
+    elif current_time <= t1:
+        progress = current_time / t1
+        # Interpolate arm joints from initial to target position
+        # Assuming arm joints are indices 0 and 1 (adjust based on your robot)
+        arm_joint_indices = [joints["right_shoulder_pitch"], joints["left_shoulder_pitch"]]  # Replace with actual indices
+        arm_target_positions = np.deg2rad([90, 90])  # Raise arms up
 
-    #     for idx, joint in enumerate(arm_joint_indices):
-    #         target_q[joint] = np.interp(progress, [0, 1], [0, arm_target_positions[idx]])
+        for idx, joint in enumerate(arm_joint_indices):
+            target_q[joint] = np.interp(progress, [0, 1], [0, arm_target_positions[idx]])
 
     # # Arms up to bend knees (t1 to t2)
     # elif current_time <= t2:
@@ -198,12 +198,12 @@ def run_mujoco_scripted(cfg):
     sim_steps = int(cfg.sim_duration / cfg.dt)
     for step in tqdm(range(sim_steps), desc="Simulating..."):
         current_time = step * cfg.dt
+        q = data.qpos[-cfg.num_actions:].astype(np.double)
+        dq = data.qvel[-cfg.num_actions:].astype(np.double)
+
 
         # Update target_q based on scripted behavior
         target_q = get_scripted_joint_targets(current_time, cfg, joints)
-
-        q = data.qpos[-cfg.num_actions:].astype(np.double)
-        dq = data.qvel[-cfg.num_actions:].astype(np.double)
 
         target_q = np.zeros((cfg.num_actions), dtype=np.double)
         target_dq = np.zeros((cfg.num_actions), dtype=np.double)
@@ -213,7 +213,7 @@ def run_mujoco_scripted(cfg):
         tau = np.clip(tau, -cfg.tau_limit, cfg.tau_limit)
  
         tau = np.zeros((cfg.num_actions), dtype=np.double)
-        tau[0] = 10.0
+        tau[joints["left_shoulder_pitch"]] = 10.0
         print("tau:", tau)
         print("q:", q)
         print("target_q:", target_q)
