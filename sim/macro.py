@@ -48,11 +48,6 @@ class Sim2simCfg:
         self.decimation = decimation
 
         self.cycle_time = cycle_time
-
-        self.tau_factor = tau_factor
-        self.tau_limit = (
-            np.array(list(self.robot.effort().values()) + list(self.robot.effort().values())) * self.tau_factor
-        )
         self.kps = np.array(list(self.robot.stiffness().values()) + list(self.robot.stiffness().values()))
         self.kds = np.array(list(self.robot.damping().values()) + list(self.robot.damping().values()))
 
@@ -84,8 +79,6 @@ def get_scripted_joint_targets(current_time, cfg, joints):
         np.ndarray: The target joint positions.
     """
     global save_q
-    # Total duration for the scripted behavior
-    total_duration = 7.0  # seconds
 
     # Initialize target positions
     target_q = np.zeros(cfg.num_actions, dtype=np.double)
@@ -96,27 +89,42 @@ def get_scripted_joint_targets(current_time, cfg, joints):
     t1 = 1.0  # Time to move arms to position
     t2 = 2.0  # Time to bend knees
     t3 = 3.0  # Time to stand up
-
+    t4 = 4.0  # Time to bend knees
     # lie down
     # Lie down to arms up (0 to t1)
     # breakpoint()
     # let it fall
-
+    # <key qpos='0 0 0.32 0.984816 0.173603 0 0 -1.51815 0.401126 -0.01571 1.4309 -0.4363 0 -1.571 0 0.463386 1.571 1.571 1.571 0 -0.463386 -1.571 -1.571'/>
+    # 
     if current_time <= t0:
         pass
+    # else:
     elif current_time <= t1:
         progress_1 = (current_time - t0) / (t1 - t0)
         # Interpolate arm joints from initial to target position
         # Assuming arm joints are indices 0 and 1 (adjust based on your robot)
         arm_joint_indices = [joints["right_shoulder_pitch"], joints["left_shoulder_pitch"]]  # Replace with actual indices
-        arm_target_positions = np.deg2rad([-90, 90])  # Raise arms up
+        arm_target_positions = [-1.55, 1.55] # Raise arms up
 
         for idx, joint in enumerate(arm_joint_indices):
             target_q[joint] = np.interp(progress_1, [0, 1], [0, arm_target_positions[idx]])
 
         save_q = target_q
-    # Arms up to bend knees (t1 to t2)
     elif current_time <= t2:
+    # else:
+        target_q = save_q
+        progress_2 = (current_time - t1) / (t2 - t1)
+        # Interpolate arm joints from initial to target position
+        # Assuming arm joints are indices 0 and 1 (adjust based on your robot)
+        arm_joint_indices = [joints["right_shoulder_yaw"], joints["left_shoulder_yaw"]]  # Replace with actual indices
+        arm_target_positions = [0.436, -0.436, ]  # Raise arms up
+
+        for idx, joint in enumerate(arm_joint_indices):
+            target_q[joint] = np.interp(progress_2, [0, 1], [0, arm_target_positions[idx]])
+
+        save_q = target_q
+    # Arms up to bend knees (t1 to t2)
+    elif current_time <= t3:
         target_q = save_q
         progress = (current_time - t1) / (t2 - t1)
 
@@ -126,28 +134,16 @@ def get_scripted_joint_targets(current_time, cfg, joints):
             target_q[joint] = np.interp(progress, [0, 1], [0, knee_bend_positions[idx]])
         save_q = target_q
     # Bend knees to stand up (t2 to t3)
-    elif current_time <= t3:
-        target_q = save_q
-        progress = (current_time - t2) / (t3 - t2)
 
+    else:
+        target_q = save_q
+        progress = (current_time - t3) / (t4 - t3)
         # Knees extend to standing position
         pitch_joint_indices = [joints["right_hip_pitch"], joints["left_hip_pitch"]]  # Replace with actual indices
         pitch_positions = np.deg2rad([-90, 90])  # Bend knees
         for idx, joint in enumerate(pitch_joint_indices):
             target_q[joint] = np.interp(progress, [0, 1], [0, pitch_positions[idx]])
         save_q = target_q
-    else:
-        # After t3, maintain standing position
-        # Arms remain up
-        target_q = save_q
-        arm_joint_indices = [0, 1]
-        arm_target_positions = np.deg2rad([90, 90])
-        for idx in arm_joint_indices:
-            target_q[idx] = arm_target_positions[idx]
-        # Knees fully extended
-        knee_joint_indices = [2, 3]
-        for idx in knee_joint_indices:
-            target_q[idx] = 0.0
 
     return target_q
 
@@ -201,7 +197,7 @@ def run_mujoco_scripted(cfg):
         target_q = get_scripted_joint_targets(current_time, cfg, joints)
         target_dq = np.zeros((cfg.num_actions), dtype=np.double)
         tau = pd_control(target_q, q, cfg.kps, target_dq, dq, cfg.kds, default)
-
+        
         print("tau:", tau)
         print("q:", q)
         print("target_q:", target_q)
@@ -217,7 +213,6 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="Deployment script.")
     parser.add_argument("--embodiment", type=str, required=True, help="embodiment")
     args = parser.parse_args()
-
 
     if args.embodiment == "stompypro":
         cfg = Sim2simCfg(
@@ -235,7 +230,7 @@ if __name__ == "__main__":
             dt=0.001,
             decimation=10,
             cycle_time=0.4,
-            tau_factor=2.,
+            tau_factor=10.,
         )
 
     run_mujoco_scripted(cfg)

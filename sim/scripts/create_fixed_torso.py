@@ -6,12 +6,13 @@ import xml.etree.ElementTree as ET
 from pathlib import Path
 
 from sim.scripts.create_mjcf import load_embodiment
-
+from sim.scripts.create_mjcf import create_mjcf
 
 def update_urdf(model_path: str, embodiment: str) -> None:
     tree = ET.parse(Path(model_path) / "robot.urdf")
     root = tree.getroot()
     robot = load_embodiment(embodiment)
+
     print(robot.default_standing())
     revolute_joints = set(robot.default_standing().keys())
 
@@ -57,7 +58,7 @@ def main() -> None:
     args = parser.parse_args()
 
     update_urdf(args.model_path, args.embodiment)
-    # create_mjcf(Path(args.model_path) / "robot")
+    create_mjcf(Path(args.model_path) / "robot")
 
 
 if __name__ == "__main__":
