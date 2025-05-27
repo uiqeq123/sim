@@ -36,6 +36,8 @@ import os
 import random
 from typing import Any, Tuple, Union
 
+from datetime import datetime
+
 import numpy as np
 
 from isaacgym import gymapi, gymutil  # isort: skip
@@ -253,7 +255,9 @@ def get_args() -> argparse.Namespace:
 
 def export_policy_as_jit(actor_critic: Any, path: Union[str, os.PathLike]) -> None:
     os.makedirs(path, exist_ok=True)
-    path = os.path.join(path, "policy_1.pt")
+    current_time = datetime.now().strftime("%Y-%m-%d-%H:%M:%S")
+    print("当前时间:", current_time)
+    path = os.path.join(path, current_time + "_policy.pt")
     model = copy.deepcopy(actor_critic.actor).to("cpu")
     traced_script_module = torch.jit.script(model)
     traced_script_module.save(path)
@@ -261,7 +265,9 @@ def export_policy_as_jit(actor_critic: Any, path: Union[str, os.PathLike]) -> No
 
 def export_policy_as_onnx(actor_critic, path):
     os.makedirs(path, exist_ok=True)
-    path = os.path.join(path, "policy_1.onnx")
+    current_time = datetime.now().strftime("%Y-%m-%d-%H:%M:%S")
+    print("当前时间:", current_time)
+    path = os.path.join(path, current_time + "_policy_1.onnx")
     model = copy.deepcopy(actor_critic.actor).to("cpu")
 
     # Get the input dimension from the first layer of the model
