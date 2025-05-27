@@ -28,6 +28,11 @@ from sim.envs.humanoids.stompypro_config import (
     StompyProStandingCfg,
 )
 from sim.envs.humanoids.stompypro_env import StompyProFreeEnv
+
+#zeroth01
+from sim.envs.humanoids.zeroth01_config import Zeroth01Cfg, Zeroth01CfgPPO
+from sim.envs.humanoids.zeroth01_env import Zeroth01Env
+
 from sim.envs.humanoids.xbot_config import XBotCfg, XBotCfgPPO
 from sim.envs.humanoids.xbot_env import XBotLFreeEnv
 from sim.utils.task_registry import TaskRegistry  # noqa: E402
