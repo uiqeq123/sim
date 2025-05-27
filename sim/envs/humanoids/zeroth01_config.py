@@ -7,7 +7,7 @@ from sim.envs.base.legged_robot_config import (  # type: ignore
     LeggedRobotCfg,
     LeggedRobotCfgPPO,
 )
-from sim.resources.stompymicro.joints import Robot
+from sim.resources.zeroth01.joints import Robot
 
 NUM_JOINTS = len(Robot.all_joints())  # 20
 
